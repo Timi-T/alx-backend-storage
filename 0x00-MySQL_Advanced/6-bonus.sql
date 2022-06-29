@@ -1,3 +1,5 @@
+-- Sql script to create a procedure
+
 DROP procedure IF EXISTS AddBonus;
 DELIMITER $$
 CREATE procedure AddBonus(IN user_id INT, IN project_name varchar(255), IN score INT)
