@@ -1,0 +1,4 @@
+// Search for documents containing a name in mongodb
+
+use "$2"
+db.school.find({name: "Holberton school"})
