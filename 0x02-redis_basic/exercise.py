@@ -18,7 +18,7 @@ def count_calls(method: Callable) -> Callable:
         key = method.__qualname__
         cache = self._redis
         cache.incr(key)
-        return method(*args)
+        return method
     return wrapper
 
 
