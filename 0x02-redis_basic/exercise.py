@@ -12,7 +12,7 @@ from typing import Any, Callable, Tuple, Union
 def count_calls(method: Callable) -> Callable:
     """decorator function to count how many times a function is called"""
     @wraps(method)
-    def calls(*args: Tuple) -> Any:
+    def calls(*args: Tuple) -> bytes:
         """"Callback function"""
         key = method.__qualname__
         cache = (args[0])._redis
