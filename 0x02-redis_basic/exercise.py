@@ -9,16 +9,31 @@ import redis
 from typing import Callable, Union
 
 
-def count_calls(mthd: Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """decorator function to count how many times a function is called"""
-    @wraps(mthd)
+    @wraps(method)
     def count_calls(*args):
         """"Callback function"""
-        key = mthd.__qualname__
+        key = method.__qualname__
         cache = (args[0])._redis
         cache.incr(key)
-        return mthd(*args)
+        return method(*args)
     return count_calls
+
+
+def call_history(method):
+    """Decorator function to record call hsitory of a function"""
+    @wraps(method)
+    def call_history(*args):
+        """Callback for call history"""
+        inputlist_key = method.__qualname__ + ":inputs"
+        outputlist_key = method.__qualname__ + ":outputs"
+        cache = (args[0])._redis
+        out = cache.rpush(inputlist_key, args[1])
+        output = method(*args)
+        cache.rpush(outputlist_key, output)
+        return output
+    return call_history
 
 
 class Cache():
@@ -28,6 +43,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Method to store data"""
