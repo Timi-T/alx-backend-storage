@@ -29,7 +29,7 @@ def call_history(method):
         inputlist_key = method.__qualname__ + ":inputs"
         outputlist_key = method.__qualname__ + ":outputs"
         cache = (args[0])._redis
-        cache.rpush(inputlist_key, args[1])
+        cache.rpush(inputlist_key, str(args[1]))
         output = method(*args)
         cache.rpush(outputlist_key, output)
         return output
