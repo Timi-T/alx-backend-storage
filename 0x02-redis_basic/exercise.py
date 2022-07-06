@@ -34,6 +34,7 @@ class Cache():
         self._redis.set(key, data)
         return key
 
+    @count_calls
     def get(self, key, fn=None):
         """Method to get a value using its key and a callback function"""
         value = self._redis.get(key)
@@ -41,10 +42,12 @@ class Cache():
             value = fn(value)
         return value
 
+    @count_calls
     def get_str(self, key):
         """Get a string format of a value"""
         return self.get(key, str)
 
+    @count_calls
     def get_int(self, key):
         """Get an integer format of a value"""
         return self.get(key, int)
