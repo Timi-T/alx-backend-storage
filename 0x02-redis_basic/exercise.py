@@ -3,9 +3,21 @@
 Create a class to handle redis operations
 """
 
+from functools import wraps
 import uuid
 import redis
 from typing import Union
+
+
+def count_calls(mthd):
+    """decorator function to count how many times a function is called"""
+    @wraps(mthd)
+    def wrapper(*args, **kwds):
+        key = mthd.__qualname__
+        cache = (args[0])._redis
+        cache.incr(key)
+        return mthd(*args, **kwds)
+    return wrapper
 
 
 class Cache():
@@ -15,6 +27,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Method to store data"""
         key = str(uuid.uuid4())
