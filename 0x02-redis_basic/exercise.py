@@ -12,13 +12,13 @@ from typing import Callable, Union
 def count_calls(method: Callable) -> Callable:
     """decorator function to count how many times a function is called"""
     @wraps(method)
-    def count_calls(*args, **kwargs):
+    def calls(*args, **kwargs):
         """"Callback function"""
         key = method.__qualname__
         cache = (args[0])._redis
         cache.incr(key)
         return method(*args, **kwargs)
-    return count_calls
+    return calls
 
 
 def call_history(method: Callable) -> Callable:
