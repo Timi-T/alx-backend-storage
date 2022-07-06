@@ -1,0 +1,1 @@
+In this directory, I learn about redis and using it with python.
