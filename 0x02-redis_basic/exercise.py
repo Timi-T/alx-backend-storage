@@ -27,3 +27,11 @@ class Cache():
         if fn:
             value = fn(value)
         return value
+
+    def get_str(self, key):
+        """Get a string format of a value"""
+        return self.get(key, str)
+
+    def get_int(self, key):
+        """Get an integer format of a value"""
+        return self.get(key, int)
