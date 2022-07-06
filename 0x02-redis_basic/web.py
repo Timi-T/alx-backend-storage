@@ -9,6 +9,7 @@ import redis
 from functools import wraps
 import requests
 
+
 def url_count(method: Callable) -> Callable:
     """Wrapper function to count frequency of url"""
     @wraps(method)
@@ -27,10 +28,3 @@ def get_page(url: str) -> str:
     """Web cache and tracker"""
     res = requests.get(url)
     return res.text
-
-
-url = "https://slack.com"
-cache = redis.Redis()
-for i in range(5):
-    get_page(url)
-    print(cache.get("count:" + url))
