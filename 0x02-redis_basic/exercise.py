@@ -46,8 +46,9 @@ def replay(method: Callable):
     out_list = cache.lrange(output_key, 0, -1)
     print("Cache.store was called {} times".format(call_freq))
     for i in range(len(in_list)):
-        print("Cache.store(*({},)) -> {}".format(in_list[i].decode('utf-8'),
-                                                 out_list[i].decode('utf-8')))
+        print("{}(*({},)) -> {}".format(method.__qualname__,
+                                        in_list[i].decode('utf-8'),
+                                        out_list[i].decode('utf-8')))
 
 
 class Cache():
