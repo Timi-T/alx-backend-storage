@@ -6,10 +6,10 @@ Create a class to handle redis operations
 from functools import wraps
 import uuid
 import redis
-from typing import Union
+from typing import Callable, Union
 
 
-def count_calls(mthd):
+def count_calls(mthd: Callable) -> Callable:
     """decorator function to count how many times a function is called"""
     @wraps(mthd)
     def wrapper(*args, **kwds):
