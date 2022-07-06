@@ -13,6 +13,7 @@ def count_calls(mthd: Callable) -> Callable:
     """decorator function to count how many times a function is called"""
     @wraps(mthd)
     def count_calls(*args):
+        """"Callback function"""
         key = mthd.__qualname__
         cache = (args[0])._redis
         cache.incr(key)
