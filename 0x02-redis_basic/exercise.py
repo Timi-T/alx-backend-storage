@@ -13,13 +13,13 @@ import requests
 def count_calls(method: Callable) -> Callable:
     """decorator function to count how many times a function is called"""
     @wraps(method)
-    def calls(*args: Tuple) -> bytes:
+    def wrapper(self, *args, **kwargs):
         """"Callback function"""
         key = method.__qualname__
-        cache = (args[0])._redis
+        cache = self._redis
         cache.incr(key)
         return method
-    return calls
+    return wrapper
 
 
 def call_history(method: Callable) -> Callable:
