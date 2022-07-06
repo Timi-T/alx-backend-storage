@@ -21,7 +21,7 @@ class Cache():
         self._redis.set(key, data)
         return key
 
-    def get(self, key, fn):
+    def get(self, key, fn=None):
         """Method to get a value using its key and a callback function"""
         value = self._redis.get(key)
         if fn:
