@@ -6,18 +6,18 @@ Create a class to handle redis operations
 from functools import wraps
 import uuid
 import redis
-from typing import Callable, Union
+from typing import Any, Callable, Tuple, Union
 
 
 def count_calls(method: Callable) -> Callable:
     """decorator function to count how many times a function is called"""
     @wraps(method)
-    def calls(*args, **kwargs):
+    def calls(*args: Tuple) -> Any:
         """"Callback function"""
         key = method.__qualname__
         cache = (args[0])._redis
         cache.incr(key)
-        return method(*args, **kwargs)
+        return method(*args)
     return calls
 
 
