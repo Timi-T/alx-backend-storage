@@ -19,7 +19,7 @@ def url_count(method: Callable) -> Callable:
         key = "count:" + args[0]
         cache.incrby(key, 1)
         cache.expire(key, 10)
-        return method(*args)
+        return method
     return count_wrapper
 
 
