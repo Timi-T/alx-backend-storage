@@ -7,6 +7,7 @@ from functools import wraps
 import uuid
 import redis
 from typing import Callable, Tuple, Union
+import requests
 
 
 def count_calls(method: Callable) -> Callable:
@@ -17,7 +18,7 @@ def count_calls(method: Callable) -> Callable:
         key = method.__qualname__
         cache = (args[0])._redis
         cache.incr(key)
-        return method(*args)
+        return method
     return calls
 
 
